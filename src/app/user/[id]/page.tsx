@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 type Props = {
   params: {
     id: string
@@ -17,7 +19,11 @@ const getUser = async (id: string) => {
 }
 
 const User = async ({ params: { id } }: Props) => {
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   const user = await getUser(id)
+  if (!user.id) {
+    notFound()
+  }
   return (
     <div className="p-2">
       <h1 className="font-bold text-lg">User詳細ページ {id}</h1>
@@ -30,3 +36,12 @@ const User = async ({ params: { id } }: Props) => {
 }
 
 export default User
+
+// export async function generateStaticParams() {
+//   const response = await fetch('https://jsonplaceholder.typicode.com/users')
+//   const users: User[] = await response.json()
+
+//   return users.slice(0, 3).map((user) => ({
+//     id: user.id.toString(),
+//   }))
+// }
