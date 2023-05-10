@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 type User = {
   id: number
   name: string
@@ -16,7 +18,11 @@ const Users = async () => {
     <main className="p-2">
     <h1 className="text-lg font-bold">Userページ</h1>
     <ul>
-      {users && users.map((user) => <li key={user.id}>{user.name}</li>)}
+      {users && users.map((user) => (
+        <li key={user.id}>
+          <Link href={`/user/${user.id}`} prefetch={false}>{user.name}</Link>
+        </li>
+      ))}
     </ul>
   </main>
   )
